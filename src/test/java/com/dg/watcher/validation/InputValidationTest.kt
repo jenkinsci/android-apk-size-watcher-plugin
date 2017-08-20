@@ -3,9 +3,9 @@ package com.dg.watcher.validation
 import com.dg.watcher.validation.InputValidation.validateCustomPathToApk
 import com.dg.watcher.validation.InputValidation.validateThresholdInMb
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
 import hudson.model.AbstractProject
-import hudson.util.FormValidation
 import hudson.util.FormValidation.ok
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.equalTo
@@ -14,8 +14,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import org.mockito.Mockito.`when`
-import java.io.IOException
 
 
 class InputValidationTest {
@@ -29,48 +27,33 @@ class InputValidationTest {
     }
 
     @Test
-    fun should_allow_a_positive_threshold() {
-        assertThat<FormValidation>(validateThresholdInMb("2.5"), `is`<FormValidation>(equalTo<FormValidation>(ok())))
-    }
+    fun `Should allow a positive threshold`() =
+            assertThat(validateThresholdInMb("2.5"), `is`(equalTo(ok())))
 
     @Test
-    fun should_indicate_a_negative_threshold_with_an_error_message() {
-        assertThat<String>(validateThresholdInMb("-2.5").message,
-                `is`(equalTo("The threshold can not be negative.")))
-    }
+    fun `Should indicate a negative threshold with an error message`() =
+            assertThat(validateThresholdInMb("-2.5").message, `is`(equalTo("The threshold can not be negative.")))
 
     @Test
-    fun should_indicate_a_non_integral_threshold_with_an_error_message() {
-        assertThat<String>(validateThresholdInMb("abc").message,
-                `is`(equalTo("The threshold must be a floating point number.")))
-    }
+    fun `Should indicate a non integral threshold with an error message`() =
+            assertThat(validateThresholdInMb("abc").message, `is`(equalTo("The threshold must be a floating point number.")))
 
     @Test
-    fun should_allow_an_empty_custom_path_to_the_apk() {
-        assertThat<FormValidation>(validateCustomPathToApk("", mockProject()), `is`<FormValidation>(equalTo<FormValidation>(ok())))
-    }
+    fun `Should allow an empty custom path to the apk`() =
+            assertThat(validateCustomPathToApk("", mockProject()), `is`(equalTo(ok())))
 
     @Test
-    fun should_allow_an_existing_custom_path_to_the_apk() {
-        assertThat<FormValidation>(validateCustomPathToApk("temp_apk_folder", mockProject()), `is`<FormValidation>(equalTo<FormValidation>(ok())))
-    }
+    fun `Should allow an existing custom path to the apk`() =
+            assertThat(validateCustomPathToApk("temp_apk_folder", mockProject()), `is`(equalTo(ok())))
 
     @Test
-    fun should_indicate_a_invalid_custom_path_to_the_apk_with_an_error_message() {
-        assertThat<String>(validateCustomPathToApk("not/existing/path", mockProject()).message,
-                `is`(equalTo("The provided path does not exist.")))
-    }
+    fun `Should indicate a invalid custom path to the apk with an error message`() =
+            assertThat(validateCustomPathToApk("not/existing/path", mockProject()).message,
+                    `is`(equalTo("The provided path does not exist.")))
 
-    @Throws(IOException::class)
-    private fun createTempApkFolder() {
-        tempDir.newFolder("temp_apk_folder")
-    }
-
-    private fun mockProject(): AbstractProject<*, *> {
-        val project: AbstractProject<*, *> = mock()
-
-        `when`<FilePath>(project.getSomeWorkspace()).thenReturn(FilePath(tempDir.root))
-
-        return project
+    private fun createTempApkFolder() = tempDir.newFolder("temp_apk_folder")
+    
+    private fun mockProject() = mock<AbstractProject<*, *>>().apply {
+        whenever(getSomeWorkspace()).thenReturn(FilePath(tempDir.root))
     }
 }
