@@ -24,7 +24,7 @@ public class PluginDescriptor extends BuildStepDescriptor<Publisher> {
 
     @Override
     public String getDisplayName() {
-        return "Watch your apk size";
+        return "Watch over the changing size of your .apk file";
     }
 
     // Used for validation in config.jelly

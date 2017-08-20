@@ -9,5 +9,6 @@ import org.junit.Assert.assertThat
 class PluginDescriptorTest {
     @Test
     fun `Should specify the displayed name of the post build action`() =
-            assertThat(PluginDescriptor().displayName, `is`(equalTo("Watch your apk size")))
+            assertThat(PluginDescriptor().displayName,
+                    `is`(equalTo("Watch over the changing size of your .apk file")))
 }
