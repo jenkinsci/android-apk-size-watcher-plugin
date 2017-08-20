@@ -30,9 +30,8 @@ class PluginTest {
     }
 
     @Test
-    fun `Should not require a monitor service`() {
-        assertThat(plugin().requiredMonitorService, `is`(equalTo(NONE)))
-    }
+    fun `Should not require a monitor service`() =
+            assertThat(plugin().requiredMonitorService, `is`(equalTo(NONE)))
 
     @Test
     fun `Should provide the history as the projects action`() {
