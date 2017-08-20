@@ -60,10 +60,6 @@
             </goals>
           </execution>
         </executions>
-
-        <!--<configuration>-->
-          <!--<jvmTarget>1.6</jvmTarget>-->
-        <!--</configuration>-->
       </plugin>
 
       <plugin>
