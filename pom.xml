@@ -62,7 +62,7 @@
         </executions>
 
         <configuration>
-          <jvmTarget>1.8</jvmTarget>
+          <jvmTarget>1.7</jvmTarget>
         </configuration>
       </plugin>
 

@@ -52,7 +52,7 @@ class InputValidationTest {
                     `is`(equalTo("The provided path does not exist.")))
 
     private fun createTempApkFolder() = tempDir.newFolder("temp_apk_folder")
-    
+
     private fun mockProject() = mock<AbstractProject<*, *>>().apply {
         whenever(getSomeWorkspace()).thenReturn(FilePath(tempDir.root))
     }
