@@ -1,7 +1,5 @@
 package com.dg.watcher.watching.saving
 
-import com.dg.watcher.watching.saving.SizeSaving.loadApkSizes
-import com.dg.watcher.watching.saving.SizeSaving.saveApkSize
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever

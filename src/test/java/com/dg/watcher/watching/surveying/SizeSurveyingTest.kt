@@ -1,7 +1,6 @@
 package com.dg.watcher.watching.surveying
 
 import com.dg.watcher.watching.saving.SizeEntry
-import com.dg.watcher.watching.surveying.SizeSurveying.surveySizes
 import com.dg.watcher.watching.surveying.SizeSurveyingResult.SIZE_THRESHOLD_EXCEEDED
 import com.dg.watcher.watching.surveying.SizeSurveyingResult.SIZE_THRESHOLD_MET
 import org.hamcrest.Matchers.`is`

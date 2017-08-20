@@ -1,6 +1,6 @@
 package com.dg.watcher.history.graph
 
-import com.dg.watcher.base.Const.GRAPH_LEGEND
+import com.dg.watcher.base.GRAPH_LEGEND
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import hudson.util.DataSetBuilder

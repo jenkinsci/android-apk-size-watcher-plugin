@@ -1,7 +1,5 @@
 package com.dg.watcher.validation
 
-import com.dg.watcher.validation.InputValidation.validateCustomPathToApk
-import com.dg.watcher.validation.InputValidation.validateThresholdInMb
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath

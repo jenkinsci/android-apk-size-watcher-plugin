@@ -1,7 +1,7 @@
 package com.dg.watcher
 
 import com.dg.watcher.history.History
-import com.dg.watcher.watching.ApkWatching.watchApkSize
+import com.dg.watcher.watching.watchApkSize
 import hudson.Launcher
 import hudson.model.AbstractBuild
 import hudson.model.AbstractProject

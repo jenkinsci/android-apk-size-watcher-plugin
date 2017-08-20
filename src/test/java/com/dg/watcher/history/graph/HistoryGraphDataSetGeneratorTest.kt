@@ -1,7 +1,6 @@
 package com.dg.watcher.history.graph
 
-import com.dg.watcher.base.Const.CONVERSION_FACTOR_BYTE_TO_MEGABYTE
-import com.dg.watcher.history.graph.HistoryGraphDataSetGenerator.generateGraphDataSet
+import com.dg.watcher.base.CONVERSION_FACTOR_BYTE_TO_MEGABYTE
 import com.dg.watcher.watching.saving.SizeEntry
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.equalTo

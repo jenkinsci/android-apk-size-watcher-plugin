@@ -1,6 +1,5 @@
 package com.dg.watcher.watching.retrieving
 
-import com.dg.watcher.watching.retrieving.ApkRetrieving.retrieveApk
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath

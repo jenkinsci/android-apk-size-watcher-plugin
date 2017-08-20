@@ -1,7 +1,7 @@
 package com.dg.watcher.watching
 
-import com.dg.watcher.base.Const.BUILD_ALLOWED
-import com.dg.watcher.base.Const.BUILD_FORBIDDEN
+import com.dg.watcher.base.BUILD_ALLOWED
+import com.dg.watcher.base.BUILD_FORBIDDEN
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
@@ -80,7 +80,7 @@ class ApkWatchingTest {
     }
 
     private fun watchApkSize(build: AbstractBuild<*, *>, thresholdInMb: Float = 0f) =
-            ApkWatching.watchApkSize(build, mock(), thresholdInMb, "")
+            watchApkSize(build, mock(), thresholdInMb, "")
 
     private fun mockBuild(): AbstractBuild<*, *> {
         val project: AbstractProject<*, *> = mock()
