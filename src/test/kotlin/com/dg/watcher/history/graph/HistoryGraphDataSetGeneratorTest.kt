@@ -37,9 +37,9 @@ class HistoryGraphDataSetGeneratorTest {
     }
 
     @Test
-    fun `Should use a entries size in megabyte as its row value`() {
+    fun `Should convert a entries size to megabyte for its row value`() {
         // GIVEN
-        val entries = arrayListOf(SizeEntry("#1", 10000000L))
+        val entries = arrayListOf(SizeEntry("#1", sizeInByte = 10000000L))
 
         // WHEN
         val dataSet = generateGraphDataSet(entries)
@@ -53,7 +53,7 @@ class HistoryGraphDataSetGeneratorTest {
     @Test
     fun `Should use a entries build name as its column key`() {
         // GIVEN
-        val entries = arrayListOf(SizeEntry("#1", 10000000L))
+        val entries = arrayListOf(SizeEntry("#1", 0L))
 
         // WHEN
         val dataSet = generateGraphDataSet(entries)
@@ -65,7 +65,7 @@ class HistoryGraphDataSetGeneratorTest {
     }
 
     private fun retrieveEntries(dataSet: DefaultCategoryDataset) = arrayListOf<SizeEntry>().apply {
-        for (i in 0 until dataSet.columnCount) {
+        for(i in 0 until dataSet.columnCount) {
             val buildName = dataSet.getColumnKey(i).toString()
 
             val apkSizeInMb = dataSet.getValue(0, i).toFloat()
