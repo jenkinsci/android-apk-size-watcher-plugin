@@ -19,34 +19,36 @@ class SizeSavingTest {
 
 
     @Test
-    fun `Should load the saved size entries`() {
+    fun `Should load the saved sizes`() {
         // GIVEN
         saveApkSize(mockApkWithSizeInByte(10000000L), mockBuildWithName("#1"))
         saveApkSize(mockApkWithSizeInByte(11000000L), mockBuildWithName("#2"))
 
         // WHEN
-        val loadedSizes = loadApkSizes(mockBuild())
+        val sizes = loadApkSizes(mockBuild())
 
         // THEN
-        assertThat(loadedSizes, hasSize(2))
-        assertThat(loadedSizes.first().buildName,  `is`(equalTo("#1")))
-        assertThat(loadedSizes.first().sizeInByte, `is`(equalTo(10000000L)))
-        assertThat(loadedSizes.last().buildName,   `is`(equalTo("#2")))
-        assertThat(loadedSizes.last().sizeInByte,  `is`(equalTo(11000000L)))
+        assertThat(sizes, hasSize(2))
+        assertThat(sizes.first().buildName,  `is`(equalTo("#1")))
+        assertThat(sizes.first().sizeInByte, `is`(equalTo(10000000L)))
+        assertThat(sizes.last().buildName,   `is`(equalTo("#2")))
+        assertThat(sizes.last().sizeInByte,  `is`(equalTo(11000000L)))
     }
 
     @Test
-    fun `Should not load any size entry when there are none saved`() =
+    fun `Should not load any sizes when there are none saved`() =
             assertThat(loadApkSizes(mockBuild()), hasSize(0))
 
-    private fun mockBuildWithName(buildName: String) = mockBuild().apply {
-        whenever(getDisplayName()).thenReturn(buildName)
+    private fun mockBuildWithName(name: String) = mockBuild().apply {
+        whenever(getDisplayName()).thenReturn(name)
     }
 
-    private fun mockBuild(): AbstractBuild<*, *> {
-        val project: AbstractProject<*, *> = mock { on { getRootDir() } doReturn tempDir.root}
+    private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
+        val project: AbstractProject<*, *> = mock {
+            on { getRootDir() } doReturn tempDir.root
+        }
 
-        return mock { on { getProject() } doReturn project}
+        whenever(getProject()).thenReturn(project)
     }
 
     private fun mockApkWithSizeInByte(sizeInByte: Long) = mock<File>().apply {

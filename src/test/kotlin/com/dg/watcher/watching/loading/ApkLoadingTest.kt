@@ -1,7 +1,7 @@
-package com.dg.watcher.watching.retrieving
+package com.dg.watcher.watching.loading
 
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
 import hudson.model.AbstractBuild
 import org.junit.Assert.assertNotNull
@@ -12,14 +12,14 @@ import org.junit.rules.TemporaryFolder
 import java.io.File.separator
 
 
-class ApkRetrievingTest {
+class ApkLoadingTest {
     @Rule @JvmField
     var tempDir = TemporaryFolder()
 
 
     @Test
     fun `Should return null when the specified folder is non existent`() =
-            assertNull(retrieveApk(mockBuild(), "temp_apk_folder"))
+            assertNull(loadApk(mockBuild(), "temp_apk_folder"))
 
     @Test
     fun `Should return null when the apk in the specified folder is non existent`() {
@@ -27,22 +27,22 @@ class ApkRetrievingTest {
         createApkFolder("temp_apk_folder")
 
         // THEN
-        assertNull(retrieveApk(mockBuild(), "temp_apk_folder"))
+        assertNull(loadApk(mockBuild(), "temp_apk_folder"))
     }
 
     @Test
-    fun `Should retrieve the apk from the specified folder`() {
+    fun `Should load the apk from the specified folder`() {
         // GIVEN
         createApkFolder("temp_apk_folder")
         createApkFile("temp_apk_folder", "debug.apk")
 
         // THEN
-        assertNotNull(retrieveApk(mockBuild(), "temp_apk_folder"))
+        assertNotNull(loadApk(mockBuild(), "temp_apk_folder"))
     }
 
     @Test
     fun `Should return null when the default folder is non existent`() =
-            assertNull(retrieveApk(mockBuild(), ""))
+            assertNull(loadApk(mockBuild()))
 
     @Test
     fun `Should return null when the apk in the default folder is non existent`() {
@@ -50,24 +50,24 @@ class ApkRetrievingTest {
         createApkFolder("app", "build", "outputs", "apk")
 
         // THEN
-        assertNull(retrieveApk(mockBuild(), ""))
+        assertNull(loadApk(mockBuild()))
     }
 
     @Test
-    fun `Should retrieve the apk from the default folder`() {
+    fun `Should load the apk from the default folder`() {
         // GIVEN
         createApkFolder("app", "build", "outputs", "apk")
         createApkFile("app/build/outputs/apk", "debug.apk")
 
         // THEN
-        assertNotNull(retrieveApk(mockBuild(), ""))
+        assertNotNull(loadApk(mockBuild()))
     }
 
     private fun createApkFolder(vararg folders: String) = tempDir.newFolder(*folders)
 
     private fun createApkFile(folder: String, fileName: String) = tempDir.newFile("$folder$separator$fileName")
 
-    private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
-        whenever(getWorkspace()).thenReturn(FilePath(tempDir.root))
+    private fun mockBuild() = mock<AbstractBuild<*, *>> {
+        on { getWorkspace() } doReturn FilePath(tempDir.root)
     }
 }

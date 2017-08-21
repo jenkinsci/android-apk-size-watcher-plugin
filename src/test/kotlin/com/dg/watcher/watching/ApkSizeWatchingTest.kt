@@ -81,7 +81,7 @@ class ApkSizeWatchingTest {
     }
 
     private fun watchApkSize(build: AbstractBuild<*, *>, thresholdInMb: Float = 0f) =
-            watchApkSize(build, mock(), thresholdInMb, "")
+            watchApkSize(build, mock(), thresholdInMb)
 
     private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
         val project: AbstractProject<*, *> = mock {

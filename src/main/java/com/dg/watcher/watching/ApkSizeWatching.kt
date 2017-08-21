@@ -2,7 +2,7 @@ package com.dg.watcher.watching
 
 import com.dg.watcher.base.BUILD_ALLOWED
 import com.dg.watcher.base.BUILD_FORBIDDEN
-import com.dg.watcher.watching.retrieving.retrieveApk
+import com.dg.watcher.watching.loading.loadApk
 import com.dg.watcher.watching.saving.loadApkSizes
 import com.dg.watcher.watching.saving.saveApkSize
 import com.dg.watcher.watching.surveying.SizeSurveyingResult.SIZE_THRESHOLD_EXCEEDED
@@ -11,8 +11,8 @@ import hudson.model.AbstractBuild
 import java.io.PrintStream
 
 
-fun watchApkSize(build: AbstractBuild<*, *>, logger: PrintStream, thresholdInMb: Float, customPathToApk: String): Boolean {
-    val apk = retrieveApk(build, customPathToApk)
+fun watchApkSize(build: AbstractBuild<*, *>, logger: PrintStream, thresholdInMb: Float, customPathToApk: String = ""): Boolean {
+    val apk = loadApk(build, customPathToApk)
 
     return if(apk != null) {
         saveApkSize(apk, build)
