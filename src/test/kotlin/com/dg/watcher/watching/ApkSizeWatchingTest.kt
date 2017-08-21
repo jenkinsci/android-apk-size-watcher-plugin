@@ -48,7 +48,7 @@ class ApkSizeWatchingTest {
         val build = mockBuildWithAnApkOfSizeInByte(10000000L)
 
         // WHEN
-        val result = watchApkSize(build, 1f)
+        val result = watchApkSize(build, thresholdInMb = 1f)
 
         // THEN
         assertThat(result, `is`(equalTo(BUILD_ALLOWED)))
@@ -61,7 +61,7 @@ class ApkSizeWatchingTest {
         val build = mockBuildWithAnApkOfSizeInByte(11000000L)
 
         // WHEN
-        val result = watchApkSize(build, 1f)
+        val result = watchApkSize(build, thresholdInMb = 1f)
 
         // THEN
         assertThat(result, `is`(equalTo(BUILD_ALLOWED)))
@@ -74,7 +74,7 @@ class ApkSizeWatchingTest {
         val build = mockBuildWithAnApkOfSizeInByte(12000000L)
 
         // WHEN
-        val result = watchApkSize(build, 1f)
+        val result = watchApkSize(build, thresholdInMb = 1f)
 
         // THEN
         assertThat(result, `is`(equalTo(BUILD_FORBIDDEN)))

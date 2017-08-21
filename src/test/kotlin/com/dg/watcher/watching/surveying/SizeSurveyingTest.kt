@@ -16,42 +16,42 @@ class SizeSurveyingTest {
         val sizes = listOf<SizeEntry>()
 
         // THEN
-        assertThat(surveySizes(sizes, 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, thresholdInMb = 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should pass the size survey when only one size is recorded`() {
         // GIVEN
-        val sizes = listOf(SizeEntry("#1", 10000000L))
+        val sizes = listOf(SizeEntry("#1", sizeInByte = 10000000L))
 
         // THEN
-        assertThat(surveySizes(sizes, 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, thresholdInMb = 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should pass the size survey when the size difference is below the threshold`() {
         // GIVEN
-        val sizes = listOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 11000000L))
+        val sizes = listOf(SizeEntry("#1", sizeInByte = 10000000L), SizeEntry("#2", sizeInByte = 11000000L))
 
         // THEN
-        assertThat(surveySizes(sizes, 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, thresholdInMb = 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should pass the size survey when the size difference is exactly the threshold`() {
         // GIVEN
-        val sizes = listOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 12000000L))
+        val sizes = listOf(SizeEntry("#1", sizeInByte = 10000000L), SizeEntry("#2", sizeInByte = 12000000L))
 
         // THEN
-        assertThat(surveySizes(sizes, 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, thresholdInMb = 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should fail the size survey when the size difference exceeds the threshold`() {
         // GIVEN
-        val sizes = listOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 14000000L))
+        val sizes = listOf(SizeEntry("#1", sizeInByte = 10000000L), SizeEntry("#2", sizeInByte = 14000000L))
 
         // THEN
-        assertThat(surveySizes(sizes, 2f), `is`(equalTo(SIZE_THRESHOLD_EXCEEDED)))
+        assertThat(surveySizes(sizes, thresholdInMb = 2f), `is`(equalTo(SIZE_THRESHOLD_EXCEEDED)))
     }
 }
