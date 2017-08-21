@@ -7,7 +7,6 @@ import hudson.tasks.Publisher;
 import hudson.util.FormValidation;
 import org.kohsuke.stapler.AncestorInPath;
 import org.kohsuke.stapler.QueryParameter;
-
 import static com.dg.watcher.validation.InputValidationKt.validateCustomPathToApk;
 import static com.dg.watcher.validation.InputValidationKt.validateThresholdInMb;
 
