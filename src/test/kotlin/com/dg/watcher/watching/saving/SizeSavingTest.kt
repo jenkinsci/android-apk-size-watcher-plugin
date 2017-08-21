@@ -1,6 +1,5 @@
 package com.dg.watcher.watching.saving
 
-import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.model.AbstractBuild
@@ -25,7 +24,7 @@ class SizeSavingTest {
         saveApkSize(mockApkWithSizeInByte(11000000L), mockBuildWithName("#2"))
 
         // WHEN
-        val sizes = loadApkSizes(mockBuild())
+        val sizes = loadApkSizes(mockProject())
 
         // THEN
         assertThat(sizes, hasSize(2))
@@ -37,18 +36,20 @@ class SizeSavingTest {
 
     @Test
     fun `Should not load any sizes when there are none saved`() =
-            assertThat(loadApkSizes(mockBuild()), hasSize(0))
+            assertThat(loadApkSizes(mockProject()), hasSize(0))
 
     private fun mockBuildWithName(name: String) = mockBuild().apply {
         whenever(getDisplayName()).thenReturn(name)
     }
 
     private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
-        val project: AbstractProject<*, *> = mock {
-            on { getRootDir() } doReturn tempDir.root
-        }
+        val project = mockProject()
 
         whenever(getProject()).thenReturn(project)
+    }
+
+    private fun mockProject() = mock<AbstractProject<*, *>>().apply {
+        whenever(getRootDir()).thenReturn(tempDir.root)
     }
 
     private fun mockApkWithSizeInByte(sizeInByte: Long) = mock<File>().apply {
