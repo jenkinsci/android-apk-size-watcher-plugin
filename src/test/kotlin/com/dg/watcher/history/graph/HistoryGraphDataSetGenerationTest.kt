@@ -9,7 +9,7 @@ import org.junit.Assert.assertThat
 import org.junit.Test
 
 
-class HistoryGraphDataSetGeneratorTest {
+class HistoryGraphDataSetGenerationTest {
     @Test
     fun `Should include all 20 entries in the generated data set`() {
         // GIVEN

@@ -34,7 +34,7 @@ class HistoryGraph(private val project: AbstractProject<*, *>) : Graph(currentTi
     }
 
     private fun createLineGraph() = createLineChart(GRAPH_TITLE, GRAPH_X_AXIS, GRAPH_Y_AXIS,
-            createGraphData(), VERTICAL, true, true, false)
+            createGraphData(), VERTICAL, true, false, false)
 
     private fun createGraphData() = generateGraphDataSet(loadApkSizes(project))
 
