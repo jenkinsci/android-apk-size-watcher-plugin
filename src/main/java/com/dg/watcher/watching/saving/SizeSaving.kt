@@ -5,6 +5,7 @@ import com.dg.watcher.base.DB_ENCODING
 import com.dg.watcher.base.DB_FILE
 import com.dg.watcher.base.DB_ROW_SEPARATOR
 import hudson.model.AbstractBuild
+import hudson.model.AbstractProject
 import org.apache.commons.io.FileUtils.readFileToString
 import org.apache.commons.io.FileUtils.writeStringToFile
 import java.io.File
@@ -20,9 +21,9 @@ fun saveApkSize(apk: File, build: AbstractBuild<*, *>) {
     }
 }
 
-fun loadApkSizes(build: AbstractBuild<*, *>) =
+fun loadApkSizes(project: AbstractProject<*, *>) =
     try {
-        loadRowsFromDatabase(loadDatabaseFor(build)).map {
+        loadRowsFromDatabase(loadDatabase(project)).map {
             createSizeEntryFromRow(it)
         }
     }
@@ -33,14 +34,12 @@ fun loadApkSizes(build: AbstractBuild<*, *>) =
     }
 
 private fun insertApkSize(apk: File, build: AbstractBuild<*, *>) {
-    val db = loadDatabaseFor(build)
+    val db = loadDatabase(build.getProject())
 
     writeStringToFile(db, createDatabaseRow(apk, build, db), DB_ENCODING, true)
 }
 
-private fun loadDatabaseFor(build: AbstractBuild<*, *>) = File(getRootDir(build) + DB_FILE)
-
-private fun getRootDir(build: AbstractBuild<*, *>) = build.getProject().getRootDir().absolutePath
+private fun loadDatabase(project: AbstractProject<*, *>) = File(project.getRootDir().absolutePath + DB_FILE)
 
 private fun createDatabaseRow(apk: File, build: AbstractBuild<*, *>, db: File) = createRowSeparator(db) + createRowData(apk, build)
 

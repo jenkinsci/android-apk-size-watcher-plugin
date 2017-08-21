@@ -36,7 +36,7 @@ class HistoryGraph(private val project: AbstractProject<*, *>) : Graph(currentTi
     private fun createLineGraph() = createLineChart(GRAPH_TITLE, GRAPH_X_AXIS, GRAPH_Y_AXIS,
             createGraphData(), VERTICAL, true, true, false)
 
-    private fun createGraphData() = generateGraphDataSet(loadApkSizes(project.getLastBuild()))
+    private fun createGraphData() = generateGraphDataSet(loadApkSizes(project))
 
     private fun setupGraphBackground(graph: JFreeChart) {
         graph.backgroundPaint = white

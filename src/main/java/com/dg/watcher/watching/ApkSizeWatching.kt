@@ -25,7 +25,7 @@ fun watchApkSize(build: AbstractBuild<*, *>, logger: PrintStream, thresholdInMb:
 }
 
 private fun evaluateSize(build: AbstractBuild<*, *>, logger: PrintStream, thresholdInMb: Float) =
-    if(surveySizes(loadApkSizes(build), thresholdInMb) == SIZE_THRESHOLD_EXCEEDED) {
+    if(surveySizes(loadApkSizes(build.getProject()), thresholdInMb) == SIZE_THRESHOLD_EXCEEDED) {
         cancelBuild(logger, thresholdInMb)
     }
     else {
