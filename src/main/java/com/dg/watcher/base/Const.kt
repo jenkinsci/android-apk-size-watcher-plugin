@@ -8,13 +8,13 @@ import java.io.File.separator
 import java.lang.System.getProperty
 
 
-val DB_FILE = "${separator}apk_size_watcher${separator}database.csv"
+val DB_FILE = separator + "apk_size_watcher" + separator + "database.csv"
 val DB_ENCODING = "UTF-8"
 val DB_ROW_SEPARATOR: String = getProperty("line.separator")
 val DB_COLUMN_SEPARATOR = ","
 
 val APK_EXTENSION = "apk"
-val APK_DEFAULT_DIR = "app${separator}build${separator}outputs${separator}apk"
+val APK_DEFAULT_DIR = "app" + separator + "build" + separator + "outputs" + separator + "apk"
 
 val BUILD_ALLOWED = true
 val BUILD_FORBIDDEN = false
@@ -23,7 +23,7 @@ val GRAPH_WIDTH = 800
 val GRAPH_HEIGHT = 600
 val GRAPH_MAX_ENTRY_COUNT = 20
 val GRAPH_TITLE = "Apk Size History"
-val GRAPH_LEGEND = "Debug Apk"
+val GRAPH_LEGEND = "Debug Apk File"
 val GRAPH_X_AXIS = "Build"
 val GRAPH_Y_AXIS = "Megabyte"
 val GRAPH_TOOLTIP = "Build %s: %.1f Megabyte"
