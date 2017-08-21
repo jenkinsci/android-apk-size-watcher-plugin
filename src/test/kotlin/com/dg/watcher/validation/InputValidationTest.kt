@@ -1,7 +1,7 @@
 package com.dg.watcher.validation
 
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
 import hudson.model.AbstractProject
 import hudson.util.FormValidation.ok
@@ -30,7 +30,7 @@ class InputValidationTest {
 
     @Test
     fun `Should indicate a negative threshold with an error message`() =
-            assertThat(validateThresholdInMb("-2.5").message, `is`(equalTo("The threshold can not be negative.")))
+            assertThat(validateThresholdInMb("-2.5").message, `is`(equalTo("The threshold cannot be negative.")))
 
     @Test
     fun `Should indicate a non integral threshold with an error message`() =
@@ -47,11 +47,11 @@ class InputValidationTest {
     @Test
     fun `Should indicate a invalid custom path to the apk with an error message`() =
             assertThat(validateCustomPathToApk("not/existing/path", mockProject()).message,
-                    `is`(equalTo("The provided path does not exist.")))
+                    `is`(equalTo("The specified path does not exist.")))
 
     private fun createTempApkFolder() = tempDir.newFolder("temp_apk_folder")
 
-    private fun mockProject() = mock<AbstractProject<*, *>>().apply {
-        whenever(getSomeWorkspace()).thenReturn(FilePath(tempDir.root))
+    private fun mockProject() = mock<AbstractProject<*, *>> {
+        on { getSomeWorkspace() } doReturn FilePath(tempDir.root)
     }
 }
