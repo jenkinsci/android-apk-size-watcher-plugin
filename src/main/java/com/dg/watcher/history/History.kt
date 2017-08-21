@@ -16,9 +16,9 @@ class History(val project: AbstractProject<*, *>) : Action {
 
     override fun getIconFileName() = "graph.gif"
 
-    override fun getDisplayName() = "Apk History"
+    override fun getDisplayName() = "Apk Size History"
 
-    override fun getUrlName() = "apk_history"
+    override fun getUrlName() = "apk_size_history"
 
     fun updateHistory() {
         graph = HistoryGraph(project)

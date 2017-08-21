@@ -19,9 +19,7 @@ import java.lang.System.currentTimeMillis
 import java.text.NumberFormat
 
 
-class HistoryGraph(private val project: AbstractProject<*, *>)
-    : Graph(currentTimeMillis(), GRAPH_WIDTH, GRAPH_HEIGHT) {
-
+class HistoryGraph(private val project: AbstractProject<*, *>) : Graph(currentTimeMillis(), GRAPH_WIDTH, GRAPH_HEIGHT) {
     fun drawGraph(request: StaplerRequest, response: StaplerResponse) = doPng(request, response)
 
     fun drawGraphTooltips(request: StaplerRequest, response: StaplerResponse) = doMap(request, response)
@@ -36,31 +34,37 @@ class HistoryGraph(private val project: AbstractProject<*, *>)
     }
 
     private fun createLineGraph() = createLineChart(GRAPH_TITLE, GRAPH_X_AXIS, GRAPH_Y_AXIS,
-                    createGraphData(), VERTICAL, true, true, false)
+            createGraphData(), VERTICAL, true, true, false)
 
-    private fun createGraphData() = generateGraphDataSet(loadApkSizes(project.getLastBuild()!!))
+    private fun createGraphData() = generateGraphDataSet(loadApkSizes(project.getLastBuild()))
 
     private fun setupGraphBackground(graph: JFreeChart) {
         graph.backgroundPaint = white
     }
 
     private fun setupGraphSizesAxis(graph: JFreeChart) {
-        val sizeInMegabyteFormat = NumberFormat.getInstance()
-        sizeInMegabyteFormat.minimumFractionDigits = 1
-        sizeInMegabyteFormat.maximumFractionDigits = 1
+        val sizesAxis = getPlot(graph).rangeAxis as NumberAxis
 
-        (getPlot(graph).rangeAxis as NumberAxis).numberFormatOverride = sizeInMegabyteFormat
+        val sizeInMegabyteFormat = NumberFormat.getInstance().apply {
+            minimumFractionDigits = 1
+            maximumFractionDigits = 1
+        }
+
+        sizesAxis.numberFormatOverride = sizeInMegabyteFormat
     }
 
     private fun setupGraphBuildAxis(graph: JFreeChart) {
-        getPlot(graph).domainAxis.categoryLabelPositions = UP_90
+        val buildAxis = getPlot(graph).domainAxis
+
+        buildAxis.categoryLabelPositions = UP_90
     }
 
     private fun setupGraphSizesLine(graph: JFreeChart) {
-        val renderer = getRenderer(graph)
-        renderer.baseShapesVisible = true
-        renderer.baseStroke = GRAPH_LINE
-        renderer.setSeriesPaint(0, RED)
+        getRenderer(graph).apply {
+            baseShapesVisible = true
+            baseStroke = GRAPH_LINE
+            setSeriesPaint(0, RED)
+        }
 
         getPlot(graph).drawingSupplier = GRAPH_LINE_DOT
     }
