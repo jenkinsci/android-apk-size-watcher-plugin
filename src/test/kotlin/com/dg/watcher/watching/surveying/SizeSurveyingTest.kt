@@ -11,47 +11,47 @@ import org.junit.Test
 
 class SizeSurveyingTest {
     @Test
-    fun `Should pass the size survey when no size is recorded`() {
+    fun `Should pass the size survey when there are no sizes recorded`() {
         // GIVEN
-        val entries = arrayListOf<SizeEntry>()
+        val sizes = listOf<SizeEntry>()
 
         // THEN
-        assertThat(surveySizes(entries, 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should pass the size survey when only one size is recorded`() {
         // GIVEN
-        val entries = arrayListOf(SizeEntry("#1", 10000000L))
+        val sizes = listOf(SizeEntry("#1", 10000000L))
 
         // THEN
-        assertThat(surveySizes(entries, 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, 1f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should pass the size survey when the size difference is below the threshold`() {
         // GIVEN
-        val entries = arrayListOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 11000000L))
+        val sizes = listOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 11000000L))
 
         // THEN
-        assertThat(surveySizes(entries, 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should pass the size survey when the size difference is exactly the threshold`() {
         // GIVEN
-        val entries = arrayListOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 12000000L))
+        val sizes = listOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 12000000L))
 
         // THEN
-        assertThat(surveySizes(entries, 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
+        assertThat(surveySizes(sizes, 2f), `is`(equalTo(SIZE_THRESHOLD_MET)))
     }
 
     @Test
     fun `Should fail the size survey when the size difference exceeds the threshold`() {
         // GIVEN
-        val entries = arrayListOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 14000000L))
+        val sizes = listOf(SizeEntry("#1", 10000000L), SizeEntry("#2", 14000000L))
 
         // THEN
-        assertThat(surveySizes(entries, 2f), `is`(equalTo(SIZE_THRESHOLD_EXCEEDED)))
+        assertThat(surveySizes(sizes, 2f), `is`(equalTo(SIZE_THRESHOLD_EXCEEDED)))
     }
 }
