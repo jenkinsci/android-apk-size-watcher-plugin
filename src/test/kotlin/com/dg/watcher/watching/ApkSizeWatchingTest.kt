@@ -2,6 +2,7 @@ package com.dg.watcher.watching
 
 import com.dg.watcher.base.BUILD_ALLOWED
 import com.dg.watcher.base.BUILD_FORBIDDEN
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
@@ -19,7 +20,7 @@ import org.junit.rules.TemporaryFolder
 import java.io.File
 
 
-class ApkWatchingTest {
+class ApkSizeWatchingTest {
     @Rule @JvmField
     var tempDir = TemporaryFolder()
 
@@ -82,15 +83,13 @@ class ApkWatchingTest {
     private fun watchApkSize(build: AbstractBuild<*, *>, thresholdInMb: Float = 0f) =
             watchApkSize(build, mock(), thresholdInMb, "")
 
-    private fun mockBuild(): AbstractBuild<*, *> {
-        val project: AbstractProject<*, *> = mock()
-        whenever(project.getRootDir()).thenReturn(tempDir.root)
+    private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
+        val project: AbstractProject<*, *> = mock {
+            on { getRootDir() } doReturn tempDir.root
+        }
 
-        val build: AbstractBuild<*, *> = mock()
-        whenever(build.getProject()).thenReturn(project)
-        whenever(build.getWorkspace()).thenReturn(FilePath(tempDir.root))
-
-        return build
+        whenever(getProject()).thenReturn(project)
+        whenever(getWorkspace()).thenReturn(FilePath(tempDir.root))
     }
 
     private fun mockBuildWithoutAnApk() = mockBuild()
@@ -107,9 +106,7 @@ class ApkWatchingTest {
         createNewApk(apkSizeInByte)
     }
 
-    private fun deleteOldApk() {
-        cleanDirectory(File(tempDir.root.absolutePath + "/app/build/outputs/apk"))
-    }
+    private fun deleteOldApk() = cleanDirectory(File(tempDir.root.absolutePath + "/app/build/outputs/apk"))
 
     private fun createNewApk(apkSizeInByte: Long) {
         val apk = tempDir.newFile("app/build/outputs/apk/debug.apk")

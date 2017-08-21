@@ -25,26 +25,21 @@ fun watchApkSize(build: AbstractBuild<*, *>, logger: PrintStream, thresholdInMb:
 }
 
 private fun evaluateSize(build: AbstractBuild<*, *>, logger: PrintStream, thresholdInMb: Float) =
-        when(surveySizes(loadApkSizes(build), thresholdInMb)) {
-            SIZE_THRESHOLD_EXCEEDED -> cancelBuild(logger, thresholdInMb)
+    if(surveySizes(loadApkSizes(build), thresholdInMb) == SIZE_THRESHOLD_EXCEEDED) {
+        cancelBuild(logger, thresholdInMb)
+    }
+    else {
+        permitBuild(logger, thresholdInMb)
+    }
 
-            else -> permitBuild(logger, thresholdInMb)
-        }
-
-private fun cancelBuild(logger: PrintStream, thresholdInMb: Float): Boolean {
-    logger.println("Apk Watcher: Build Failed")
-    logger.println("Apk Watcher: The size difference between the " +
-            "last and the latest apk exceeded the specified threshold " +
-            "of " + thresholdInMb + " megabyte.")
-
-    return BUILD_FORBIDDEN
+private fun cancelBuild(logger: PrintStream, thresholdInMb: Float) = BUILD_FORBIDDEN.also {
+    logger.println("Apk Size Watcher Plugin: Build Failed")
+    logger.println("Apk Size Watcher Plugin: The size difference between your " +
+            "last and latest .apk File exceeded the specified threshold of $thresholdInMb megabyte.")
 }
 
-private fun permitBuild(logger: PrintStream, thresholdInMb: Float): Boolean {
-    logger.println("Apk Watcher: Build Succeeded")
-    logger.println("Apk Watcher: The size difference between the " +
-            "last and the latest apk met the specified threshold " +
-            "of " + thresholdInMb + " megabyte.")
-
-    return BUILD_ALLOWED
+private fun permitBuild(logger: PrintStream, thresholdInMb: Float) = BUILD_ALLOWED.also {
+    logger.println("Apk Size Watcher Plugin: Build Succeeded")
+    logger.println("Apk Size Watcher Plugin: The size difference between your " +
+            "last and latest .apk File met the specified threshold of $thresholdInMb megabyte.")
 }
