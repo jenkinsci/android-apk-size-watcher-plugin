@@ -10,5 +10,5 @@ class HistoryGraphUrlGenerator(private val project: AbstractProject<*, *>) : Cat
             project.getAbsoluteUrl() + retrieveBuildNumber(categoryDataset, itemIndex)
 
     private fun retrieveBuildNumber(categoryDataset: CategoryDataset, itemIndex: Int) =
-            (categoryDataset.getColumnKey(itemIndex) as String).replaceFirst("#", "")
+            (categoryDataset.getColumnKey(itemIndex) as String).replace("#", "")
 }
