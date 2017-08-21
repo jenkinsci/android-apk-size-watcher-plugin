@@ -34,12 +34,13 @@ class PluginTest {
             assertThat(plugin().requiredMonitorService, `is`(equalTo(NONE)))
 
     @Test
-    fun `Should provide the history as the projects action`() {
+    fun `Should provide the history as the projects only action`() {
         // WHEN
-        val action = plugin().getProjectAction(mockProject())
+        val actions = plugin().getProjectActions(mockProject())
 
         // THEN
-        assertThat(action, `is`(instanceOf(History::class.java)))
+        assertThat(actions, hasSize(1))
+        assertThat(actions.first(), `is`(instanceOf(History::class.java)))
     }
 
     @Test
@@ -68,13 +69,10 @@ class PluginTest {
         whenever(getRootDir()).thenReturn(tempDir.root)
     }
 
-    private fun mockBuildIncludesAction(action: History): AbstractBuild<*, *> {
+    private fun mockBuildIncludesAction(action: History) = mockBuild().apply {
         val project = mockProjectIncludesAction(action)
-        val build = mockBuild()
 
-        whenever(build.getProject()).thenReturn(project)
-
-        return build
+        whenever(getProject()).thenReturn(project)
     }
 
     private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
