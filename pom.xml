@@ -12,7 +12,7 @@
 
   <name>Apk Size Watcher Plugin</name>
   <description>Watch over the changing size of your .apk file and fail your build once the change exceeds your specified threshold.</description>
-  <url></url>
+  <url>To add once the plugin is hosted by jenkins</url>
 
   <developers>
     <developer>
