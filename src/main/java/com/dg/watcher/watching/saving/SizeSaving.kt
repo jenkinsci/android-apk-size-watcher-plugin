@@ -23,9 +23,13 @@ fun saveApkSize(apk: File, build: AbstractBuild<*, *>) {
 
 fun loadApkSizes(project: AbstractProject<*, *>) =
     try {
-        loadRowsFromDatabase(loadDatabase(project)).map {
-            createSizeEntryFromRow(it)
+        val sizes = arrayListOf<SizeEntry>()
+
+        loadRowsFromDatabase(loadDatabase(project)).forEach {
+            sizes += createSizeEntryFromRow(it)
         }
+
+        sizes.toList()
     }
     catch(e: IOException) {
         e.printStackTrace()
