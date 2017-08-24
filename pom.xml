@@ -6,11 +6,11 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>apk-size-watcher</artifactId>
+  <artifactId>android-apk-size-watcher</artifactId>
   <packaging>hpi</packaging>
   <version>0.1</version>
 
-  <name>Apk Size Watcher Plugin</name>
+  <name>Android Apk Size Watcher Plugin</name>
   <description>Watch over the changing size of your .apk file and fail your build once the change exceeds your specified threshold.</description>
   <url>To add once the plugin is hosted by jenkins</url>
 
@@ -31,9 +31,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:ssh://github.com/jenkinsci/apk-size-watcher-plugin.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/jenkinsci/apk-size-watcher-plugin.git</developerConnection>
-    <url>https://github.com/jenkinsci/apk-size-watcher-plugin</url>
+    <connection>scm:git:ssh://github.com/jenkinsci/android-apk-size-watcher-plugin.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/jenkinsci/android-apk-size-watcher-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/android-apk-size-watcher-plugin</url>
   </scm>
 
   <build>
