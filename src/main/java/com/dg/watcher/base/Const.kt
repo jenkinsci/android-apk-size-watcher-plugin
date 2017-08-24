@@ -8,7 +8,7 @@ import java.io.File.separator
 import java.lang.System.getProperty
 
 
-val DB_FILE = separator + "apk_size_watcher" + separator + "database.csv"
+val DB_FILE = separator + "android_apk_size_watcher_plugin" + separator + "database.csv"
 val DB_ENCODING = "UTF-8"
 val DB_ROW_SEPARATOR: String = getProperty("line.separator")
 val DB_COLUMN_SEPARATOR = ","
