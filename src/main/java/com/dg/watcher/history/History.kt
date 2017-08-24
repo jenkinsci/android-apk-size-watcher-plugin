@@ -1,13 +1,13 @@
 package com.dg.watcher.history
 
+import com.dg.watcher.base.Project
 import com.dg.watcher.history.graph.HistoryGraph
-import hudson.model.AbstractProject
 import hudson.model.Action
 import org.kohsuke.stapler.StaplerRequest
 import org.kohsuke.stapler.StaplerResponse
 
 
-class History(val project: AbstractProject<*, *>) : Action {
+class History(val project: Project) : Action {
     private var graph: HistoryGraph? = null
 
     init {

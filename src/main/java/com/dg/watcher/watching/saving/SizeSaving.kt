@@ -1,18 +1,13 @@
 package com.dg.watcher.watching.saving
 
-import com.dg.watcher.base.DB_COLUMN_SEPARATOR
-import com.dg.watcher.base.DB_ENCODING
-import com.dg.watcher.base.DB_FILE
-import com.dg.watcher.base.DB_ROW_SEPARATOR
-import hudson.model.AbstractBuild
-import hudson.model.AbstractProject
+import com.dg.watcher.base.*
 import org.apache.commons.io.FileUtils.readFileToString
 import org.apache.commons.io.FileUtils.writeStringToFile
 import java.io.File
 import java.io.IOException
 
 
-fun saveApkSize(apk: File, build: AbstractBuild<*, *>) {
+fun saveApkSize(apk: File, build: Build) {
     try {
         insertApkSize(apk, build)
     }
@@ -21,7 +16,7 @@ fun saveApkSize(apk: File, build: AbstractBuild<*, *>) {
     }
 }
 
-fun loadApkSizes(project: AbstractProject<*, *>) =
+fun loadApkSizes(project: Project) =
     try {
         val sizes = arrayListOf<SizeEntry>()
 
@@ -37,19 +32,19 @@ fun loadApkSizes(project: AbstractProject<*, *>) =
         emptyList<SizeEntry>()
     }
 
-private fun insertApkSize(apk: File, build: AbstractBuild<*, *>) {
+private fun insertApkSize(apk: File, build: Build) {
     val db = loadDatabase(build.getProject())
 
     writeStringToFile(db, createDatabaseRow(apk, build, db), DB_ENCODING, true)
 }
 
-private fun loadDatabase(project: AbstractProject<*, *>) = File(project.getRootDir().absolutePath + DB_FILE)
+private fun loadDatabase(project: Project) = File(project.getRootDir().absolutePath + DB_FILE)
 
-private fun createDatabaseRow(apk: File, build: AbstractBuild<*, *>, db: File) = createRowSeparator(db) + createRowData(apk, build)
+private fun createDatabaseRow(apk: File, build: Build, db: File) = createRowSeparator(db) + createRowData(apk, build)
 
 private fun createRowSeparator(database: File) = if(database.exists()) DB_ROW_SEPARATOR else ""
 
-private fun createRowData(apk: File, build: AbstractBuild<*, *>) = build.getDisplayName() + DB_COLUMN_SEPARATOR + apk.length()
+private fun createRowData(apk: File, build: Build) = build.getDisplayName() + DB_COLUMN_SEPARATOR + apk.length()
 
 private fun loadRowsFromDatabase(database: File) =
     if(database.exists()) {

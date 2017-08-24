@@ -2,16 +2,16 @@ package com.dg.watcher.watching.loading
 
 import com.dg.watcher.base.APK_DEFAULT_DIR
 import com.dg.watcher.base.APK_EXTENSION
-import hudson.model.AbstractBuild
+import com.dg.watcher.base.Build
 import org.apache.commons.io.FileUtils.listFiles
 import java.io.File
 import java.io.File.separator
 
 
-fun loadApk(build: AbstractBuild<*, *>, customApkDir: String = "") =
+fun loadApk(build: Build, customApkDir: String = "") =
         loadApkFiles(getPathToApkDir(build, customApkDir)).firstOrNull()
 
-private fun getPathToApkDir(build: AbstractBuild<*, *>, customApkDir: String): String {
+private fun getPathToApkDir(build: Build, customApkDir: String): String {
     val workspaceDir = getWorkspaceDir(build)
 
     return if(customApkDir.isNotBlank()) {
@@ -22,11 +22,7 @@ private fun getPathToApkDir(build: AbstractBuild<*, *>, customApkDir: String): S
     }
 }
 
-private fun getWorkspaceDir(build: AbstractBuild<*, *>): String {
-    val workspace = build.getWorkspace()
-
-    return if(workspace != null) workspace.remote + separator else ""
-}
+private fun getWorkspaceDir(build: Build) = build.getWorkspace()?.remote + separator
 
 private fun loadApkFiles(pathToApkDir: String): List<File> {
     val apkDirectory = File(pathToApkDir)

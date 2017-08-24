@@ -1,9 +1,9 @@
 package com.dg.watcher.watching.saving
 
+import com.dg.watcher.base.Build
+import com.dg.watcher.base.Project
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import hudson.model.AbstractBuild
-import hudson.model.AbstractProject
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertThat
 import org.junit.Rule
@@ -42,13 +42,13 @@ class SizeSavingTest {
         whenever(getDisplayName()).thenReturn(name)
     }
 
-    private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
+    private fun mockBuild() = mock<Build>().apply {
         val project = mockProject()
 
         whenever(getProject()).thenReturn(project)
     }
 
-    private fun mockProject() = mock<AbstractProject<*, *>>().apply {
+    private fun mockProject() = mock<Project>().apply {
         whenever(getRootDir()).thenReturn(tempDir.root)
     }
 

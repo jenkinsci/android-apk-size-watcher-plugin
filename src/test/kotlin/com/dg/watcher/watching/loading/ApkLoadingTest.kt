@@ -1,9 +1,9 @@
 package com.dg.watcher.watching.loading
 
+import com.dg.watcher.base.Build
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import hudson.FilePath
-import hudson.model.AbstractBuild
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Rule
@@ -67,7 +67,7 @@ class ApkLoadingTest {
 
     private fun createApkFile(folder: String, fileName: String) = tempDir.newFile("$folder$separator$fileName")
 
-    private fun mockBuild() = mock<AbstractBuild<*, *>> {
+    private fun mockBuild() = mock<Build> {
         on { getWorkspace() } doReturn FilePath(tempDir.root)
     }
 }

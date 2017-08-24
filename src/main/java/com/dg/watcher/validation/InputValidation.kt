@@ -1,6 +1,6 @@
 package com.dg.watcher.validation
 
-import hudson.model.AbstractProject
+import com.dg.watcher.base.Project
 import hudson.util.FormValidation
 import hudson.util.FormValidation.error
 import hudson.util.FormValidation.ok
@@ -23,7 +23,7 @@ fun validateThresholdInMb(input: String): FormValidation =
         error("The threshold must be a floating point number.")
     }
 
-fun validateCustomPathToApk(input: String, project: AbstractProject<*, *>): FormValidation =
+fun validateCustomPathToApk(input: String, project: Project): FormValidation =
     if(noPathSpecified(input) || validPathSpecified(input, project)) {
         ok()
     }
@@ -33,8 +33,8 @@ fun validateCustomPathToApk(input: String, project: AbstractProject<*, *>): Form
 
 private fun noPathSpecified(input: String) = input.isBlank()
 
-private fun validPathSpecified(input: String, project: AbstractProject<*, *>) =
-        File(retrieveWorkSpaceRoot(project) + input).exists()
+private fun validPathSpecified(input: String, project: Project) =
+        File(getWorkSpaceRoot(project) + input).exists()
 
-private fun retrieveWorkSpaceRoot(project: AbstractProject<*, *>) =
+private fun getWorkSpaceRoot(project: Project) =
         project.getSomeWorkspace().toString() + separator

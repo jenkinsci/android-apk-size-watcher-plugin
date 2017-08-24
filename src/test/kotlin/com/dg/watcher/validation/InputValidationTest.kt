@@ -1,9 +1,9 @@
 package com.dg.watcher.validation
 
+import com.dg.watcher.base.Project
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import hudson.FilePath
-import hudson.model.AbstractProject
 import hudson.util.FormValidation.ok
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.equalTo
@@ -51,7 +51,7 @@ class InputValidationTest {
 
     private fun createTempApkFolder() = tempDir.newFolder("temp_apk_folder")
 
-    private fun mockProject() = mock<AbstractProject<*, *>> {
+    private fun mockProject() = mock<Project> {
         on { getSomeWorkspace() } doReturn FilePath(tempDir.root)
     }
 }

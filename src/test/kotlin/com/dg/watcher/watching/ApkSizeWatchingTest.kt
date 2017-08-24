@@ -2,12 +2,12 @@ package com.dg.watcher.watching
 
 import com.dg.watcher.base.BUILD_ALLOWED
 import com.dg.watcher.base.BUILD_FORBIDDEN
+import com.dg.watcher.base.Build
+import com.dg.watcher.base.Project
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
-import hudson.model.AbstractBuild
-import hudson.model.AbstractProject
 import org.apache.commons.io.FileUtils.cleanDirectory
 import org.apache.commons.io.FileUtils.writeByteArrayToFile
 import org.hamcrest.Matchers.equalTo
@@ -80,11 +80,11 @@ class ApkSizeWatchingTest {
         assertThat(result, `is`(equalTo(BUILD_FORBIDDEN)))
     }
 
-    private fun watchApkSize(build: AbstractBuild<*, *>, thresholdInMb: Float = 0f) =
+    private fun watchApkSize(build: Build, thresholdInMb: Float = 0f) =
             watchApkSize(build, mock(), thresholdInMb)
 
-    private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
-        val project: AbstractProject<*, *> = mock {
+    private fun mockBuild() = mock<Build>().apply {
+        val project: Project = mock {
             on { getRootDir() } doReturn tempDir.root
         }
 

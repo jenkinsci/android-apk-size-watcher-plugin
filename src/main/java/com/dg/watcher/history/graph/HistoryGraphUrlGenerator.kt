@@ -1,14 +1,14 @@
 package com.dg.watcher.history.graph
 
-import hudson.model.AbstractProject
+import com.dg.watcher.base.Project
 import org.jfree.chart.urls.CategoryURLGenerator
 import org.jfree.data.category.CategoryDataset
 
 
-class HistoryGraphUrlGenerator(private val project: AbstractProject<*, *>) : CategoryURLGenerator {
+class HistoryGraphUrlGenerator(private val project: Project) : CategoryURLGenerator {
     override fun generateURL(categoryDataSet: CategoryDataset, series: Int, itemIndex: Int) =
-            project.getAbsoluteUrl() + retrieveBuildNumber(categoryDataSet, itemIndex)
+            project.getAbsoluteUrl() + getBuildNumber(categoryDataSet, itemIndex)
 
-    private fun retrieveBuildNumber(categoryDataSet: CategoryDataset, itemIndex: Int) =
-            (categoryDataSet.getColumnKey(itemIndex) as String).replace("#", "")
+    private fun getBuildNumber(categoryDataSet: CategoryDataset, itemIndex: Int) =
+            (categoryDataSet.getColumnKey(itemIndex) as String).replaceFirst("#", "")
 }

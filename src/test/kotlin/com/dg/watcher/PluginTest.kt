@@ -1,12 +1,12 @@
 package com.dg.watcher
 
+import com.dg.watcher.base.Build
+import com.dg.watcher.base.Project
 import com.dg.watcher.history.History
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
 import hudson.Launcher
-import hudson.model.AbstractBuild
-import hudson.model.AbstractProject
 import hudson.model.BuildListener
 import hudson.tasks.BuildStepMonitor.NONE
 import org.hamcrest.Matchers.*
@@ -65,7 +65,7 @@ class PluginTest {
         whenever(getAction(History::class.java)).thenReturn(action)
     }
 
-    private fun mockProject() = mock<AbstractProject<*, *>>().apply {
+    private fun mockProject() = mock<Project>().apply {
         whenever(getRootDir()).thenReturn(tempDir.root)
     }
 
@@ -75,7 +75,7 @@ class PluginTest {
         whenever(getProject()).thenReturn(project)
     }
 
-    private fun mockBuild() = mock<AbstractBuild<*, *>>().apply {
+    private fun mockBuild() = mock<Build>().apply {
         whenever(getWorkspace()).thenReturn(FilePath(tempDir.root))
     }
 
