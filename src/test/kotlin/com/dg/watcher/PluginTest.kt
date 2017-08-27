@@ -19,7 +19,7 @@ import org.mockito.Mockito.verify
 
 
 class PluginTest {
-    @Rule @JvmField
+    @get:Rule
     var tempDir = TemporaryFolder()
 
 

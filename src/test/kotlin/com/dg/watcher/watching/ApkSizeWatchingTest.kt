@@ -21,7 +21,7 @@ import java.io.File
 
 
 class ApkSizeWatchingTest {
-    @Rule @JvmField
+    @get:Rule
     var tempDir = TemporaryFolder()
 
 

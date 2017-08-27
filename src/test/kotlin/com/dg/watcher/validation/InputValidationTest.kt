@@ -15,7 +15,7 @@ import org.junit.rules.TemporaryFolder
 
 
 class InputValidationTest {
-    @Rule @JvmField
+    @get:Rule
     var tempDir = TemporaryFolder()
 
 

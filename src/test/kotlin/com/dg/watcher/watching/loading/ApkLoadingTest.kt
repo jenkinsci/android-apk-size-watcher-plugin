@@ -13,7 +13,7 @@ import java.io.File.separator
 
 
 class ApkLoadingTest {
-    @Rule @JvmField
+    @get:Rule
     var tempDir = TemporaryFolder()
 
 
