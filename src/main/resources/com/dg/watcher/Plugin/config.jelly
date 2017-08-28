@@ -1,9 +1,9 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
-    <f:entry title="Size change threshold (megabyte)" field="thresholdInMb">
+    <f:entry title="Size change threshold (megabytes)" field="thresholdInMb">
         <f:textbox/>
     </f:entry>
-    <f:entry title="Custom path to your .apk file" field="customPathToApk">
+    <f:entry title="Custom directory of your .apk file" field="customPathToApk">
         <f:textbox/>
     </f:entry>
 </j:jelly>
