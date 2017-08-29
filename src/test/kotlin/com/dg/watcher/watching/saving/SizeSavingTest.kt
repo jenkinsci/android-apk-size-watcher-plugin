@@ -13,8 +13,8 @@ import java.io.File
 
 
 class SizeSavingTest {
-    @get:Rule
-    var tempDir = TemporaryFolder()
+    @Rule @JvmField
+    val tempDir = TemporaryFolder()
 
 
     @Test

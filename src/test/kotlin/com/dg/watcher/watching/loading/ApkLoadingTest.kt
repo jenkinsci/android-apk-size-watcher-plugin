@@ -13,8 +13,8 @@ import java.io.File.separator
 
 
 class ApkLoadingTest {
-    @get:Rule
-    var tempDir = TemporaryFolder()
+    @Rule @JvmField
+    val tempDir = TemporaryFolder()
 
 
     @Test
@@ -61,6 +61,16 @@ class ApkLoadingTest {
 
         // THEN
         assertNotNull(loadApk(mockBuild()))
+    }
+
+    @Test
+    fun `Should never load the apk from a nested folder`() {
+        // GIVEN
+        createApkFolder("apk_folder", "nested_folder")
+        createApkFile("apk_folder/nested_folder", "debug.apk")
+
+        // THEN
+        assertNull(loadApk(mockBuild(), "apk_folder"))
     }
 
     private fun createApkFolder(vararg folders: String) = tempDir.newFolder(*folders)
