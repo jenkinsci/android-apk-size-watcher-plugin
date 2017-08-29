@@ -8,7 +8,7 @@
 
   <artifactId>android-apk-size-watcher</artifactId>
   <packaging>hpi</packaging>
-  <version>1.0</version>
+  <version>1.0-SNAPSHOT</version>
 
   <name>Android Apk Size Watcher Plugin</name>
   <description>Watch over the changing size of your .apk file and fail your build once the change exceeds your specified threshold.</description>
