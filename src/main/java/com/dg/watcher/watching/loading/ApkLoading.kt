@@ -28,7 +28,7 @@ private fun loadApkFiles(pathToApkDir: String): List<File> {
     val apkDirectory = File(pathToApkDir)
 
     return if(apkDirectory.exists()) {
-        listFiles(apkDirectory, arrayOf(APK_EXTENSION), true).toList()
+        listFiles(apkDirectory, arrayOf(APK_EXTENSION), false).toList()
     }
     else {
         emptyList()
