@@ -18,7 +18,7 @@ class HistoryGraphTooltipGeneratorTest {
         val tooltip = HistoryGraphTooltipGenerator().generateToolTip(entry, 0, 0)
 
         // THEN
-        assertThat(tooltip, `is`(equalTo("Build #99: 1.5 Megabyte")))
+        assertThat(tooltip, `is`(equalTo("Build #99: 1.5 Megabytes")))
     }
 
     private fun createDataSetWithSizeEntry(buildName: String, apkSizeInMb: Float) = DataSetBuilder<String, String>().run {

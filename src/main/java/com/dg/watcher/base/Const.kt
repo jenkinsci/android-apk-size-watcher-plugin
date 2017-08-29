@@ -25,8 +25,8 @@ val GRAPH_MAX_ENTRY_COUNT = 20
 val GRAPH_TITLE = "Apk Size History"
 val GRAPH_LEGEND = "Debug Apk File"
 val GRAPH_X_AXIS = "Build"
-val GRAPH_Y_AXIS = "Megabyte"
-val GRAPH_TOOLTIP = "Build %s: %.1f Megabyte"
+val GRAPH_Y_AXIS = "Megabytes"
+val GRAPH_TOOLTIP = "Build %s: %.1f Megabytes"
 val GRAPH_LINE = BasicStroke(1.5f)
 val GRAPH_LINE_DOT = DefaultDrawingSupplier(
         DEFAULT_PAINT_SEQUENCE,
