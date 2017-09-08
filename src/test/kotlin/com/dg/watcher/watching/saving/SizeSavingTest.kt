@@ -20,8 +20,8 @@ class SizeSavingTest {
     @Test
     fun `Should load the saved sizes`() {
         // GIVEN
-        saveApkSize(mockApkWithSizeInByte(10000000L), mockBuildWithName("#1"))
-        saveApkSize(mockApkWithSizeInByte(11000000L), mockBuildWithName("#2"))
+        saveApkSize(mockApk(sizeInByte = 10000000L), mockBuild(name = "#1"))
+        saveApkSize(mockApk(sizeInByte = 11000000L), mockBuild(name = "#2"))
 
         // WHEN
         val sizes = loadApkSizes(mockProject())
@@ -38,7 +38,7 @@ class SizeSavingTest {
     fun `Should not load any sizes when there are none saved`() =
             assertThat(loadApkSizes(mockProject()), hasSize(0))
 
-    private fun mockBuildWithName(name: String) = mockBuild().apply {
+    private fun mockBuild(name: String) = mockBuild().apply {
         whenever(getDisplayName()).thenReturn(name)
     }
 
@@ -52,7 +52,7 @@ class SizeSavingTest {
         whenever(getRootDir()).thenReturn(tempDir.root)
     }
 
-    private fun mockApkWithSizeInByte(sizeInByte: Long) = mock<FilePath>().apply {
+    private fun mockApk(sizeInByte: Long) = mock<FilePath>().apply {
         whenever(length()).thenReturn(sizeInByte)
     }
 }

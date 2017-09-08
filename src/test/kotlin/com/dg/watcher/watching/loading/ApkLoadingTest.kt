@@ -47,16 +47,6 @@ class ApkLoadingTest {
     }
 
     @Test
-    fun `Should load the apk as a file path to allow loading it from slave-nodes`() {
-        // GIVEN
-        createApkFolder("app", "build", "outputs", "apk")
-        createApkFile("app/build/outputs/apk", "debug.apk")
-
-        // THEN
-        assertTrue(loadApk(mockBuild()) is FilePath)
-    }
-
-    @Test
     fun `Should load the apk from the default folder`() {
         // GIVEN
         createApkFolder("app", "build", "outputs", "apk")
