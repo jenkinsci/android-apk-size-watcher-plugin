@@ -1,13 +1,10 @@
 package com.dg.watcher.watching.loading
 
 import com.dg.watcher.base.Build
-import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -20,8 +17,25 @@ class ApkLoadingTest {
 
 
     @Test
+    fun `Should return null when the workspace is non existent`() =
+            assertNull(loadApk(mockBuild(workspace = null)))
+
+    @Test
+    fun `Should return null when the default folder is non existent`() =
+            assertNull(loadApk(mockBuild()))
+
+    @Test
     fun `Should return null when the specified folder is non existent`() =
             assertNull(loadApk(mockBuild(), "temp_apk_folder"))
+
+    @Test
+    fun `Should return null when the apk in the default folder is non existent`() {
+        // GIVEN
+        createApkFolder("app", "build", "outputs", "apk")
+
+        // THEN
+        assertNull(loadApk(mockBuild()))
+    }
 
     @Test
     fun `Should return null when the apk in the specified folder is non existent`() {
@@ -33,26 +47,13 @@ class ApkLoadingTest {
     }
 
     @Test
-    fun `Should load the apk from the specified folder`() {
-        // GIVEN
-        createApkFolder("temp_apk_folder")
-        createApkFile("temp_apk_folder", "debug.apk")
-
-        // THEN
-        assertNotNull(loadApk(mockBuild(), "temp_apk_folder"))
-    }
-
-    @Test
-    fun `Should return null when the default folder is non existent`() =
-            assertNull(loadApk(mockBuild()))
-
-    @Test
-    fun `Should return null when the apk in the default folder is non existent`() {
+    fun `Should load the apk as a file path to allow loading it from slave-nodes`() {
         // GIVEN
         createApkFolder("app", "build", "outputs", "apk")
+        createApkFile("app/build/outputs/apk", "debug.apk")
 
         // THEN
-        assertNull(loadApk(mockBuild()))
+        assertTrue(loadApk(mockBuild()) is FilePath)
     }
 
     @Test
@@ -66,6 +67,16 @@ class ApkLoadingTest {
     }
 
     @Test
+    fun `Should load the apk from the specified folder`() {
+        // GIVEN
+        createApkFolder("temp_apk_folder")
+        createApkFile("temp_apk_folder", "debug.apk")
+
+        // THEN
+        assertNotNull(loadApk(mockBuild(), "temp_apk_folder"))
+    }
+
+    @Test
     fun `Should never load the apk from a nested folder`() {
         // GIVEN
         createApkFolder("apk_folder", "nested_folder")
@@ -75,30 +86,11 @@ class ApkLoadingTest {
         assertNull(loadApk(mockBuild(), "apk_folder"))
     }
 
-    @Test
-    fun `Should get a FilePath returned`() {
-        // GIVEN
-        createApkFolder("app", "build", "outputs", "apk")
-        createApkFile("app/build/outputs/apk", "debug.apk")
-
-        // THEN
-        assertTrue(loadApk(mockBuild()) is FilePath)
-    }
-
-    @Test
-    fun `Should return null when the workspace of the apk is no longer existent`() {
-        assertNull(loadApk(mockBuildWithoutWorkspace()))
-    }
-
     private fun createApkFolder(vararg folders: String) = tempDir.newFolder(*folders)
 
     private fun createApkFile(folder: String, fileName: String) = tempDir.newFile("$folder$separator$fileName")
 
-    private fun mockBuild() = mock<Build> {
-        on { getWorkspace() } doReturn FilePath(tempDir.root)
-    }
-
-    private fun mockBuildWithoutWorkspace() = mock<Build>().apply {
-        whenever(getWorkspace()).thenReturn(null)
+    private fun mockBuild(workspace: FilePath? = FilePath(tempDir.root)) = mock<Build>().apply {
+        whenever(getWorkspace()).thenReturn(workspace)
     }
 }
