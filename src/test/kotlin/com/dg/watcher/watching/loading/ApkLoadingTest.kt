@@ -3,6 +3,7 @@ package com.dg.watcher.watching.loading
 import com.dg.watcher.base.Build
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import hudson.FilePath
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -84,11 +85,20 @@ class ApkLoadingTest {
         assertTrue(loadApk(mockBuild()) is FilePath)
     }
 
+    @Test
+    fun `Should return null when the workspace of the apk is no longer existent`() {
+        assertNull(loadApk(mockBuildWithoutWorkspace()))
+    }
+
     private fun createApkFolder(vararg folders: String) = tempDir.newFolder(*folders)
 
     private fun createApkFile(folder: String, fileName: String) = tempDir.newFile("$folder$separator$fileName")
 
     private fun mockBuild() = mock<Build> {
         on { getWorkspace() } doReturn FilePath(tempDir.root)
+    }
+
+    private fun mockBuildWithoutWorkspace() = mock<Build>().apply {
+        whenever(getWorkspace()).thenReturn(null)
     }
 }

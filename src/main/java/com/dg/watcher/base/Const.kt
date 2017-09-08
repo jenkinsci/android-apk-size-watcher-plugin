@@ -13,7 +13,7 @@ val DB_ENCODING = "UTF-8"
 val DB_ROW_SEPARATOR: String = getProperty("line.separator")
 val DB_COLUMN_SEPARATOR = ","
 
-val APK_EXTENSION = "apk"
+val APK_FILE_FILTER = "*.apk"
 val APK_DEFAULT_DIR = "app" + separator + "build" + separator + "outputs" + separator + "apk"
 
 val BUILD_ALLOWED = true
