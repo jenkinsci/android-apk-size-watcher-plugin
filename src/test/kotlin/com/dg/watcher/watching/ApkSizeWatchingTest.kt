@@ -31,7 +31,7 @@ class ApkSizeWatchingTest {
     }
 
     @Test
-    fun `Should allow the initial build without an generated apk`() {
+    fun `Should allow a build without an generated apk`() {
         // GIVEN
         val build = mockBuildWithoutAnApk()
 

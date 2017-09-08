@@ -20,26 +20,30 @@ fun watchApkSize(build: Build, logger: PrintStream, thresholdInMb: Float, custom
         evaluateSize(build, logger, thresholdInMb)
     }
     else {
-        permitBuild(logger, thresholdInMb)
+        permitBuildWithoutApk(logger)
     }
 }
 
 private fun evaluateSize(build: Build, logger: PrintStream, thresholdInMb: Float) =
     if(surveySizes(loadApkSizes(build.getProject()), thresholdInMb) == SIZE_THRESHOLD_EXCEEDED) {
-        cancelBuild(logger, thresholdInMb)
+        cancelBuildWithApk(logger, thresholdInMb)
     }
     else {
-        permitBuild(logger, thresholdInMb)
+        permitBuildWithApk(logger, thresholdInMb)
     }
 
-private fun cancelBuild(logger: PrintStream, thresholdInMb: Float) = BUILD_FORBIDDEN.also {
+private fun cancelBuildWithApk(logger: PrintStream, thresholdInMb: Float) = BUILD_FORBIDDEN.also {
     logger.println("Android Apk Size Watcher Plugin: Build Failed")
     logger.println("Android Apk Size Watcher Plugin: The size difference between your " +
-            "last and latest .apk File exceeded the specified threshold of $thresholdInMb megabytes.")
+            "last and latest .apk file exceeded the specified threshold of $thresholdInMb megabytes.")
 }
 
-private fun permitBuild(logger: PrintStream, thresholdInMb: Float) = BUILD_ALLOWED.also {
+private fun permitBuildWithApk(logger: PrintStream, thresholdInMb: Float) = BUILD_ALLOWED.also {
     logger.println("Android Apk Size Watcher Plugin: Build Succeeded")
     logger.println("Android Apk Size Watcher Plugin: The size difference between your " +
-            "last and latest .apk File met the specified threshold of $thresholdInMb megabytes.")
+            "last and latest .apk file met the specified threshold of $thresholdInMb megabytes.")
+}
+
+private fun permitBuildWithoutApk(logger: PrintStream) = BUILD_ALLOWED.also {
+    logger.println("Android Apk Size Watcher Plugin: Couldn't detect a generated .apk file.")
 }
