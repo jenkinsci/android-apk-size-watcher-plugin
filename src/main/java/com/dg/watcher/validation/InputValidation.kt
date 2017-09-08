@@ -1,6 +1,8 @@
 package com.dg.watcher.validation
 
 import com.dg.watcher.base.Project
+import com.dg.watcher.base.extension.exists
+import com.dg.watcher.base.extension.getFileInWorkspace
 import hudson.util.FormValidation
 import hudson.util.FormValidation.error
 import hudson.util.FormValidation.ok
@@ -29,10 +31,7 @@ fun validateCustomPathToApk(input: String, project: Project): FormValidation =
         error("The specified path does not exist.")
     }
 
-private fun noPathSpecified(input: String) = input.isBlank()
+private fun noPathSpecified(path: String) = path.isBlank()
 
-private fun validPathSpecified(input: String, project: Project) =
-        getWorkSpaceRoot(project)?.child(input)?.exists() == true
-
-private fun getWorkSpaceRoot(project: Project) =
-        project.getSomeWorkspace()
+private fun validPathSpecified(path: String, project: Project) =
+        project.getFileInWorkspace(path).exists()
