@@ -6,6 +6,7 @@ import com.nhaarman.mockito_kotlin.mock
 import hudson.FilePath
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -71,6 +72,16 @@ class ApkLoadingTest {
 
         // THEN
         assertNull(loadApk(mockBuild(), "apk_folder"))
+    }
+
+    @Test
+    fun `Should get a FilePath returned`() {
+        // GIVEN
+        createApkFolder("app", "build", "outputs", "apk")
+        createApkFile("app/build/outputs/apk", "debug.apk")
+
+        // THEN
+        assertTrue(loadApk(mockBuild()) is FilePath)
     }
 
     private fun createApkFolder(vararg folders: String) = tempDir.newFolder(*folders)

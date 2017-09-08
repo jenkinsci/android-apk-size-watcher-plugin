@@ -4,8 +4,6 @@ import com.dg.watcher.base.Project
 import hudson.util.FormValidation
 import hudson.util.FormValidation.error
 import hudson.util.FormValidation.ok
-import java.io.File
-import java.io.File.separator
 
 
 fun validateThresholdInMb(input: String): FormValidation =
@@ -34,7 +32,7 @@ fun validateCustomPathToApk(input: String, project: Project): FormValidation =
 private fun noPathSpecified(input: String) = input.isBlank()
 
 private fun validPathSpecified(input: String, project: Project) =
-        File(getWorkSpaceRoot(project) + input).exists()
+        getWorkSpaceRoot(project)?.child(input)?.exists() == true
 
 private fun getWorkSpaceRoot(project: Project) =
-        project.getSomeWorkspace().toString() + separator
+        project.getSomeWorkspace()

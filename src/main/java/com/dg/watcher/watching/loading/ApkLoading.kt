@@ -3,32 +3,29 @@ package com.dg.watcher.watching.loading
 import com.dg.watcher.base.APK_DEFAULT_DIR
 import com.dg.watcher.base.APK_EXTENSION
 import com.dg.watcher.base.Build
-import org.apache.commons.io.FileUtils.listFiles
-import java.io.File
-import java.io.File.separator
+import hudson.FilePath
 
 
 fun loadApk(build: Build, customApkDir: String = "") =
         loadApkFiles(getPathToApkDir(build, customApkDir)).firstOrNull()
 
-private fun getPathToApkDir(build: Build, customApkDir: String): String {
+private fun getPathToApkDir(build: Build, customApkDir: String): FilePath? {
     val workspaceDir = getWorkspaceDir(build)
 
     return if(customApkDir.isNotBlank()) {
-        workspaceDir + customApkDir
+        workspaceDir?.child(customApkDir)
     }
     else {
-        workspaceDir + APK_DEFAULT_DIR
+        workspaceDir?.child(APK_DEFAULT_DIR)
     }
 }
 
-private fun getWorkspaceDir(build: Build) = build.getWorkspace()?.remote + separator
+private fun getWorkspaceDir(build: Build) = build.getWorkspace()
 
-private fun loadApkFiles(pathToApkDir: String): List<File> {
-    val apkDirectory = File(pathToApkDir)
+private fun loadApkFiles(pathToApkDir: FilePath?): List<FilePath> {
 
-    return if(apkDirectory.exists()) {
-        listFiles(apkDirectory, arrayOf(APK_EXTENSION), false).toList()
+    return if(pathToApkDir?.exists() == true) {
+        pathToApkDir.list("*.$APK_EXTENSION").toList()
     }
     else {
         emptyList()
