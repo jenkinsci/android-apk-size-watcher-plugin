@@ -31,24 +31,24 @@ class ApkSizeWatchingTest {
     }
 
     @Test
-    fun `Should allow a build without an generated apk`() {
-        // GIVEN
-        val build = mockBuildWithoutAnApk()
-
-        // WHEN
-        val result = watchApkSize(build)
-
-        // THEN
-        assertThat(result, `is`(equalTo(BUILD_ALLOWED)))
-    }
-
-    @Test
     fun `Should allow the initial build with an generated apk`() {
         // GIVEN
         val build = mockBuildWithAnApkOfSizeInByte(10000000L)
 
         // WHEN
         val result = watchApkSize(build, thresholdInMb = 1f)
+
+        // THEN
+        assertThat(result, `is`(equalTo(BUILD_ALLOWED)))
+    }
+
+    @Test
+    fun `Should allow a build without an generated apk`() {
+        // GIVEN
+        val build = mockBuildWithoutAnApk()
+
+        // WHEN
+        val result = watchApkSize(build)
 
         // THEN
         assertThat(result, `is`(equalTo(BUILD_ALLOWED)))
